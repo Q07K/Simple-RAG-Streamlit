@@ -72,10 +72,10 @@ if "datas" in st.session_state:
         for i in st.session_state["datas"]:
             wait_field.warning(i.name)
 
-        with open("dummy.pdf", mode="wb") as w:
+        with open(data.name, mode="wb") as w:
             w.write(data.getvalue())
 
-        docs = pdf_extractor(path="dummy.pdf")
+        docs = pdf_extractor(path=data.name)
         add_documents(
             embedding_model=embedding_model(),
             zilliz_uri=st.secrets["milvus_uri"],

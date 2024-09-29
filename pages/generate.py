@@ -49,7 +49,7 @@ chain = (
         "documents": vector_db.as_retriever(
             search_kwargs={
                 "k": 10,
-                "score_threshold": 0.8,
+                "score_threshold": 0.6,
             }
         ),
         "question": RunnablePassthrough(),
