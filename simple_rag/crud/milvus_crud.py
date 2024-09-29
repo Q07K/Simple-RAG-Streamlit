@@ -3,9 +3,8 @@
 from langchain_core.documents import Document
 from langchain_core.embeddings.embeddings import Embeddings
 
+from langchain_milvus import Milvus
 from pymilvus import MilvusClient
-
-from simple_rag.database.milvus import milvus
 
 
 def add_documents(
@@ -38,14 +37,18 @@ def add_documents(
         False: 함수가 정상적으로 동작하지 않는 경우
     """
 
-    try:
-        vector_db = milvus(embedding_model, zilliz_uri, zilliz_token)
+    vector_db = Milvus(
+        embedding_function=embedding_model,  # Embedding 모델
+        collection_name="langchain_example",  # Data를 저장할 Collection 이름
+        connection_args={
+            "uri": zilliz_uri,  # Zilliz "Public Endpoint"
+            "token": zilliz_token,  # Zilliz "Token"
+        },
+        auto_id=True,
+    )
 
-        # Milvus zilliz Cloud에 Document 추가
-        vector_db.add_documents(documents=documents)
-        return True
-    except:
-        return False
+    # Milvus zilliz Cloud에 Document 추가
+    vector_db.add_documents(documents=documents)
 
 
 def get_unique_sources(zilliz_uri: str, zilliz_token: str) -> list[str | None]:

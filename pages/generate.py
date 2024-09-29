@@ -49,7 +49,7 @@ chain = (
         "documents": vector_db.as_retriever(
             search_kwargs={
                 "k": 10,
-                "score_threshold": 0.6,
+                "score_threshold": 0.3,
             }
         ),
         "question": RunnablePassthrough(),
@@ -58,7 +58,7 @@ chain = (
     | llm
     | StrOutputParser()
 )
-col1, col2, col3 = st.columns(3)
+col1, col2, col3 = st.columns([0.5, 9, 0.5])
 
 main = col2.container(height=600)
 if col2.chat_input(key="user_input"):

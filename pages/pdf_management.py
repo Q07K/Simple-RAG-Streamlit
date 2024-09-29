@@ -25,7 +25,6 @@ st.set_page_config(
 col1, col2, col3 = st.columns([0.3, 0.02, 0.68])
 
 col1.header("데이터 추가")
-
 col1.file_uploader(
     "파일 추가",
     key="_datas",
