@@ -8,8 +8,8 @@ A simple RAG built for teaching
   - [사용 가능한 데이터 목록 조회](#사용-가능한-데이터-목록-조회)
   - [사용할 데이터 선택](#사용할-데이터-선택)
 - [Prompt](#Prompt)
-  - [사전에 저장한 `system prompt` 선택](#사전에-저장한-system prompt-선택)
-  - [`system prompt` 로드 및 수정](#system prompt-로드-및-수정)
+  - [사전에 저장한 `system prompt` 선택](#사전에-저장한-system-prompt-선택)
+  - [`system prompt` 로드 및 수정](#system-prompt-로드-및-수정)
 - [Chat](#Chat)
 
 ## Main page
