@@ -1,5 +1,6 @@
 # Simple-RAG-Streamlit
 A simple RAG built for teaching
+
 **목록:**
 - [Main page](#Main-page)
 - [Add Data](#Add-Data)
@@ -12,6 +13,19 @@ A simple RAG built for teaching
   - [`system prompt` 로드 및 수정](#system-prompt-로드-및-수정)
 - [Chat](#Chat)
 
+---
+
+## 사용 예시
+
+### 사용 가능한 문서가 없을 때
+![image](https://github.com/user-attachments/assets/58dea9f8-c3d1-4309-8227-8e79560dabfb)
+
+### 사용 가능한 문서가 있을 때
+![image](https://github.com/user-attachments/assets/23e11ab4-3a87-4301-a09a-064efede818f)
+
+
+
+---
 ## Main page
 ![image](https://github.com/user-attachments/assets/b918b84d-c3de-4fb2-88d1-8c392b7c09fa)
 
