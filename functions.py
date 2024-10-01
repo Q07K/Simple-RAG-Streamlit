@@ -1,20 +1,13 @@
 import streamlit as st
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core import prompts, output_parsers, runnables
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_milvus import Milvus
 from pymilvus import MilvusClient
 
 
 def milvus():
-    return Milvus(
-        embedding_function=embedding(),
-        collection_name="langchain_example",
-        connection_args={"uri": st.secrets["milvus_uri"], "token": st.secrets["milvus_token"]},
-        auto_id=True,
-    )
+    return Milvus(embedding_function=embedding(), collection_name=st.secrets["collection_name"], connection_args={"uri": st.secrets["milvus_uri"], "token": st.secrets["milvus_token"]}, auto_id=True)
 
 
 def embedding():
@@ -38,7 +31,7 @@ def add_pdf(byte_file):
 def available_document():
     client = MilvusClient(uri=st.secrets["milvus_uri"], token=st.secrets["milvus_token"])
     try:
-        results = client.query(collection_name="langchain_example", filter="pk > 0", output_fields=["source"])
+        results = client.query(collection_name=st.secrets["collection_name"], filter="pk > 0", output_fields=["source"])
     except:
         results = []
     unique_sources = set()
@@ -50,8 +43,8 @@ def available_document():
 
 def chat_bot(system_prompt, use_docs):
     vector_db = milvus()
-    prompt = ChatPromptTemplate([("system", system_prompt), ("user", "**Document:**\n\n{context}"), ("user", "{question}")])
+    prompt = prompts.ChatPromptTemplate([("system", system_prompt), ("user", f"**Document List:**{use_docs}"), ("user", "**Document:**\n\n{context}"), ("user", "{question}")])
     llm = ChatGoogleGenerativeAI(model=st.secrets["model"], api_key=st.secrets["api_key"])
     context = vector_db.as_retriever(search_kwargs={"k": 10, "score_threshold": 0.3, "expr": f"source in {list(use_docs)}"})
-    chain = {"context": context, "question": RunnablePassthrough()} | prompt | llm | StrOutputParser()
+    chain = {"context": context, "question": runnables.RunnablePassthrough()} | prompt | llm | output_parsers.StrOutputParser()
     return chain.stream(st.session_state["user_input"])
