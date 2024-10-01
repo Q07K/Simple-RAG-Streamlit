@@ -4,12 +4,12 @@ A simple RAG built for teaching
 - [Main page](#Main-page)
 - [Add Data](#Add-Data)
   - [데이터 업로드](#데이터-업로드)
-  - [`submit` 버튼 클릭](#`submit`-버튼-클릭)
+  - [`submit` 버튼 클릭](#submit-버튼-클릭)
   - [사용 가능한 데이터 목록 조회](#사용-가능한-데이터-목록-조회)
   - [사용할 데이터 선택](#사용할-데이터-선택)
 - [Prompt](#Prompt)
-  - [사전에 저장한 `system prompt` 선택](#사전에-저장한-`system prompt`-선택)
-  - [`system prompt` 로드 및 수정](#`system prompt`-로드-및-수정)
+  - [사전에 저장한 `system prompt` 선택](#사전에-저장한-system prompt-선택)
+  - [`system prompt` 로드 및 수정](#system prompt-로드-및-수정)
 - [Chat](#Chat)
 
 ## Main page
@@ -20,7 +20,7 @@ A simple RAG built for teaching
 ### 데이터 업로드
 ![image](https://github.com/user-attachments/assets/5dd7eaa5-ffc1-41af-81a3-ef836f59d293)
 
-### `submit` 버튼 클릭
+### submit 버튼 클릭
 ![image](https://github.com/user-attachments/assets/c0f253cb-c1b6-46b1-aa96-369100e4a46e)
 
 - Embbeding 및 Milvus zilliz에 업로드
@@ -33,10 +33,10 @@ A simple RAG built for teaching
 
 ## Prompt
 
-### 사전에 저장한 `system prompt` 선택
+### 사전에 저장한 system prompt 선택
 ![image](https://github.com/user-attachments/assets/267b34db-26a6-42b6-8606-933cae345611)
 
-### `system prompt` 로드 및 수정
+### system prompt 로드 및 수정
 ![image](https://github.com/user-attachments/assets/235e37e1-e85a-44f7-b000-a1952289e5be)
 
 ## Chat
