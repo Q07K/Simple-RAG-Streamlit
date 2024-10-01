@@ -3,6 +3,14 @@ A simple RAG built for teaching
 **목록:**
 - [Main page](#Main-page)
 - [Add Data](#Add-Data)
+  - [데이터 업로드](#데이터-업로드)
+  - [`submit` 버튼 클릭](#`submit`-버튼-클릭)
+  - [사용 가능한 데이터 목록 조회](#사용-가능한-데이터-목록-조회)
+  - [사용할 데이터 선택](#사용할-데이터-선택)
+- [Prompt](#Prompt)
+  - [사전에 저장한 `system prompt` 선택](#사전에-저장한-`system prompt`-선택)
+  - [`system prompt` 로드 및 수정](#`system prompt`-로드-및-수정)
+- [Chat](#Chat)
 
 ## Main page
 ![image](https://github.com/user-attachments/assets/b918b84d-c3de-4fb2-88d1-8c392b7c09fa)
@@ -20,7 +28,7 @@ A simple RAG built for teaching
 ### 사용 가능한 데이터 목록 조회
 ![image](https://github.com/user-attachments/assets/2ef11038-d75b-4c60-9d14-4af0c35acc00)
 
-### 검색에 사용할 목록 선택
+### 사용할 데이터 선택
 ![image](https://github.com/user-attachments/assets/65b61cae-147d-4d2a-9972-c95c12829084)
 
 ## Prompt
