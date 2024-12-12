@@ -1,17 +1,39 @@
 import streamlit as st
-from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-from langchain_core import prompts, output_parsers, runnables
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_milvus import Milvus
 from pymilvus import MilvusClient
 
 
-def milvus():
-    return Milvus(embedding_function=embedding(), collection_name=st.secrets["collection_name"], connection_args={"uri": st.secrets["milvus_uri"], "token": st.secrets["milvus_token"]}, auto_id=True)
+def embedding_model() -> GoogleGenerativeAIEmbeddings:
+    """Google의 Embedding 모델을 불러오는 함수
+
+    Returns
+    -------
+    GoogleGenerativeAIEmbeddings
+        불러온 Embedding 모델
+
+    Model list
+    ----------
+    - "models/embedding-001"
+    -
+    """
+    return GoogleGenerativeAIEmbeddings(
+        model="models/embedding-001",
+        google_api_key=st.secrets["api_key"],
+    )
 
 
-def embedding():
-    return GoogleGenerativeAIEmbeddings(model=f"models/{st.secrets['embedded']}", google_api_key=st.secrets["api_key"])
+def milvus_client() -> Milvus:
+    return Milvus(
+        embedding_function=embedding_model(),
+        collection_name=st.secrets["collection_name"],
+        connection_args={
+            "uri": st.secrets["milvus_uri"],
+            "token": st.secrets["milvus_token"],
+        },
+        auto_id=True,
+    )
 
 
 def pdf_extractor(path):
@@ -22,16 +44,23 @@ def pdf_extractor(path):
 
 
 def add_pdf(byte_file):
-    vector_db = milvus()
+    vector_db = milvus_client()
     with open(byte_file.name, mode="wb") as w:
         w.write(byte_file.getvalue())
     vector_db.add_documents(documents=pdf_extractor(byte_file.name))
 
 
 def available_document():
-    client = MilvusClient(uri=st.secrets["milvus_uri"], token=st.secrets["milvus_token"])
+    client = MilvusClient(
+        uri=st.secrets["milvus_uri"],
+        token=st.secrets["milvus_token"],
+    )
     try:
-        results = client.query(collection_name=st.secrets["collection_name"], filter="pk > 0", output_fields=["source"])
+        results = client.query(
+            collection_name=st.secrets["collection_name"],
+            filter="pk > 0",
+            output_fields=["source"],
+        )
     except:
         results = []
     unique_sources = set()
@@ -41,10 +70,5 @@ def available_document():
     return list(unique_sources)
 
 
-def chat_bot(system_prompt, use_docs):
-    vector_db = milvus()
-    prompt = prompts.ChatPromptTemplate([("system", system_prompt), ("user", f"**Document List:**{use_docs}"), ("user", "**Document:**\n\n{context}"), ("user", "{question}")])
-    llm = ChatGoogleGenerativeAI(model=st.secrets["model"], api_key=st.secrets["api_key"])
-    context = vector_db.as_retriever(search_kwargs={"k": 10, "score_threshold": 0.3, "expr": f"source in {list(use_docs)}"})
-    chain = {"context": context, "question": runnables.RunnablePassthrough()} | prompt | llm | output_parsers.StrOutputParser()
-    return chain.stream(st.session_state["user_input"])
+if __name__ == "__main__":
+    milvus_client()
