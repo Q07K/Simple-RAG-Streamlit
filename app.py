@@ -1,5 +1,5 @@
 import streamlit as st
-from functions import chat_bot
+from functions import generate
 
 title = "Simple RAG"
 
@@ -15,4 +15,4 @@ if st.chat_input(key="user_input"):
         st.markdown(st.session_state["user_input"])
     with chat_field.chat_message("ai"):
         with st.spinner("생각하는 중..."):
-            st.write_stream(chat_bot(system_prompt="system_prompt"))
+            st.write_stream(generate(st.session_state["user_input"]))
